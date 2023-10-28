@@ -81,5 +81,39 @@ int QuestList::getPosOf(const std::string &pTitle) const
 */
 bool QuestList::contains(const std::string &pTitle) const
 {
+    if (getLength() == 0) return false;
+
+    Node<Quest*> *iterator = first_;
+    while (iterator != nullptr)
+    {
+        if(iterator->getItem()->title_ == pTitle) return true;
+        iterator = iterator->getNext();
+    }
+    return false;
+}
+
+/**
+    @pre: The given quest is not already in the QuestList
+    @param:  A pointer to a Quest object
+    @post:  Inserts the given quest pointer into the QuestList. Each of its dependencies and subquests are also added to the QuestList IF not already in the list.
+            If the quest is already in the list but is marked as "NOT DISCOVERED", update its details. (This happens when a quest has been added to the list through a dependency or subquest list)
+        
+    @return: True if the quest was added successfully, False otherwise
+*/
+bool QuestList::addQuest(Quest* pQuest)
+{
+    if(this->contains(pQuest->title_) == true) return false;
+
+    // Create a new node containing the new entry and get a pointer to position
+    Node<Quest*> *new_node_ptr = new Node<Quest*>(pQuest);
+
+    //insert at end of list
+    new_node_ptr->setNext(nullptr);
+    new_node_ptr->setPrevious(last_);
+    last_->setNext(new_node_ptr);
+    last_ = new_node_ptr;
+
+    item_count_++; // Increase count of entries
+    return true;
 
 }

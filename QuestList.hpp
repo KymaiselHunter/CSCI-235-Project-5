@@ -30,7 +30,7 @@ struct Quest
         @post: Creates a new Quest object with default values (zero-initialized)
     */
     Quest() : 
-    title_("N/A"), description_("N/A"), completed_(false), EXP(0), dependencies_({}), subquests_({}) {}
+    title_("N/A"), description_("NOT DISCOVERED"), completed_(false), EXP(0), dependencies_({}), subquests_({}) {}
 
     /*
     @param: A string reference to a quest title
@@ -40,7 +40,7 @@ struct Quest
     @param: A vector of Quest pointers representing the quest's subquests
     @post: Creates a new Quest object with the given parameters
     */ //p stands for parameter
-    Quest(std::string pTitle, std::string pDescription, bool pCompleted, int pEXP, std::vector<Quest*> pDependcies, std::vector<Quest*> pSubquests) :
+    Quest(std::string pTitle, std::string pDescription = "NOT DISCOVERED", bool pCompleted = false, int pEXP = 0, std::vector<Quest*> pDependcies = {}, std::vector<Quest*> pSubquests = {}) :
     title_(pTitle), description_(pDescription), completed_(pCompleted), EXP(pEXP), dependencies_(pDependcies), subquests_(pSubquests) {}
 
 };
@@ -107,7 +107,7 @@ class QuestList : public DoublyLinkedList<Quest*>
                 
             @return: True if the quest was added successfully, False otherwise
         */
-        bool addQuest(const Quest* pQuest);
+        bool addQuest(Quest* pQuest);
 
         /**
             @param:  A reference to string representing the quest title
