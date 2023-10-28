@@ -102,18 +102,55 @@ bool QuestList::contains(const std::string &pTitle) const
 */
 bool QuestList::addQuest(Quest* pQuest)
 {
-    if(this->contains(pQuest->title_) == true) return false;
+    //removed this because i think im suppose to assume the quest is not already in the questList?
+    //if it fails the precondition, false
+    //if(this->contains(pQuest->title_) == true) return false;
 
-    // Create a new node containing the new entry and get a pointer to position
-    Node<Quest*> *new_node_ptr = new Node<Quest*>(pQuest);
+    //add using parent class function
+    this->insert(this->item_count_, pQuest);
+    
+    //add dependencies and subquests
+    //loop through dependecies vector
+    for(int i = 0; i < pQuest->dependencies_.size(); i++)
+    {
+        //if the dependency does not exist, add it
+        //or if it does exist but has not been discovered AND the new quest is not "NOT DISCOVERED", update it
+        if(!this->contains(pQuest->dependencies_[i]->title_) ) 
+        {
+            addQuest(pQuest->dependencies_[i]);
+        }
+        else if(pQuest->dependencies_[i]->description_ == "NOT DISCOVERED" && pQuest->description_ != "NOT DISCOVERED")
+        {
+            //get the ptr to this undiscovered quest by getting the position of it which is passed into to find the pointer of the node and take it's item
+            Quest *update = this->getPointerTo(this->getPosOf(pQuest->dependencies_[i]->title_))->getItem();
 
-    //insert at end of list
-    new_node_ptr->setNext(nullptr);
-    new_node_ptr->setPrevious(last_);
-    last_->setNext(new_node_ptr);
-    last_ = new_node_ptr;
+            //because both ptrs are suppose to be taking the same place, we can delete the old one and replace it with this new ptr
+            //delete the value of the quest ptr
+            delete update;
+            //replaces it with the value held in this depdency
+            *update = *pQuest->dependencies_[i];
+        }
+    }
 
-    item_count_++; // Increase count of entries
-    return true;
+    //loop through dependecies vector
+    for(int i = 0; i < pQuest->subquests_.size(); i++)
+    {
+        //if the dependency does not exist, add it
+        //or if it does exist but has not been discovered AND the new quest is not "NOT DISCOVERED", update it
+        if(!this->contains(pQuest->subquests_[i]->title_) ) 
+        {
+            addQuest(pQuest->subquests_[i]);
+        }
+        else if(pQuest->subquests_[i]->description_ == "NOT DISCOVERED" && pQuest->description_ != "NOT DISCOVERED")
+        {
+            //get the ptr to this undiscovered quest by getting the position of it which is passed into to find the pointer of the node and take it's item
+            Quest *update = this->getPointerTo(this->getPosOf(pQuest->subquests_[i]->title_))->getItem();
 
+            //because both ptrs are suppose to be taking the same place, we can delete the old one and replace it with this new ptr
+            //delete the value of the quest ptr
+            delete update;
+            //replaces it with the value held in this depdency
+            *update = *pQuest->subquests_[i];
+        }
+    }
 }
