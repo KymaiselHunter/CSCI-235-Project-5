@@ -447,3 +447,52 @@ void QuestList::questHistory(const std::string &pFilter) const
         iterator = iterator->getNext();
     }
 }
+
+/**
+    @param: A quest pointer to a subquest
+    @param: An integer for depth, used to calculate how many indents
+    @post:  uses recursion to print a list of subquests
+*/
+void QuestList::recursiveQuestDetails(Quest *pQuest, int depth)
+{
+    std::string output = "";//need an empty string for indentations 
+    for(int i = 0; i < depth; i++)
+    {
+        output += "  ";
+    }
+    output += pQuest->title_;
+    output += ": ";
+
+    if(pQuest->completed_) output += "Complete";
+    else output += "Not Complete";
+
+    std::cout << output << std::endl;
+
+    for(int i = 0; i < pQuest->dependencies_.size(); i++)
+    {
+        recursiveQuestDetails(pQuest->dependencies_[i], depth + 1);
+    }
+}
+
+/**
+    @param: A quest pointer to a main quest
+    @post:  Outputs subquest pathway. Print quest names with two spaces ("  ") of indentation for each subquest, recursively.
+            Also print the percentage of experience gained in this pathway, rounded down to the lower integer.
+            The format should be of the form:
+            [Main Quest] ([Pathway XP] / [Projected XP]% Complete)
+                [Subquest0]: [Complete / Not Complete]
+                    [Sub-Subquest01]: [Complete / Not Complete]
+                        [Sub-Subquest011]: [Complete / Not Complete]
+                    [Subquest02]: [Complete / Not Complete]
+            Hint: You can write a helper function to print the subquests recursively. If the given quest is already marked as completed, you can assume that all of its subquests are also completed.
+*/
+void QuestList::printQuestDetails(const Quest *pQuest)
+{
+    std::cout << pQuest->title_ << " (" << (calculatePathwayExperience(pQuest) / calculateProjectedExperience(pQuest)) << "% Complete)";
+
+    for(int i = 0; i < pQuest->dependencies_.size(); i++)
+    {
+        recursiveQuestDetails(pQuest->dependencies_[i]);
+    }
+
+}

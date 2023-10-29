@@ -229,7 +229,7 @@ class QuestList : public DoublyLinkedList<Quest*>
                             [Subquest02]: [Complete / Not Complete]
                     Hint: You can write a helper function to print the subquests recursively. If the given quest is already marked as completed, you can assume that all of its subquests are also completed.
         */
-        void printQuestDetails(const Quest *pQuest) const;
+        void printQuestDetails(const Quest *pQuest);
 
     //private for recrusvie helper function
     private:
@@ -241,6 +241,14 @@ class QuestList : public DoublyLinkedList<Quest*>
             @post:  uses recursion to add the not ready quests at the lowest level first, also adds readied quests to the ready vecotr
         */
         void recursiveQuestQuery(Quest *pQuest, std::vector<Quest*> &pReady, std::vector<Quest*> &pNotReady);
+
+        //Another recursive function but for the last func "printQuestDetails"
+        /**
+            @param: A quest pointer to a quest
+            @param: An integer for depth, used to calculate how many indents
+            @post:  uses recursion to print a list of subquests
+        */
+        void recursiveQuestDetails(Quest *pQuest, int depth = 1);
 };
 
 #endif //QuestList_HPP
