@@ -11,46 +11,121 @@
 
 #include "QuestList.hpp"
 
-// //constructors
-// /**
-//     Default Constructor
-// */
-// QuestList::QuestList(): DoublyLinkedList<Quest*>()
-// {
+//gonna need the vector data type for quest query and paramerterized construcotr
+#include <vector>   
 
-// }
+//include for taking a file in paramerterized constructor
+#include <fstream>
 
-// /**
-//     @param: a reference to string name of an input file
-//     @pre: Formatting of the csv file is as follows:
-//         Title: A string
-//         Description: A string
-//         Completion Status: 0 (False) or 1 (True)
-//         Experience Points: A non negative integer
-//         Dependencies: A list of Quest titles of the form [QUEST1];[QUEST2], where each quest is separated by a semicolon. The value may be NONE.
-//         Subquests: A list of Quest titles of the form [QUEST1];[QUEST2], where each quest is separated by a semicolon. The value may be NONE.
-//     Notes:
-//         - The first line of the input file is a header and should be ignored.
-//         - The dependencies and subquests are separated by a semicolon and may be NONE.
-//         - The dependencies and subquests may be in any order.
-//         - If any of the dependencies or subquests are not in the list, they should be created as new quests with the following information:
-//             - Title: The title of the quest
-//             - Description: "NOT DISCOVERED"
-//             - Completion Status: False
-//             - Experience Points: 0
-//             - Dependencies: An empty vector
-//             - Subquests: An empty vector
-//         - However, if you eventually encounter a quest that matches one of the "NOT DISCOVERED" quests while parsing the file, you should update all the quest details.
-//         Hint: update as needed using addQuest()
+//constructors
+/**
+    Default Constructor
+*/
+QuestList::QuestList(): DoublyLinkedList<Quest*>()
+{
+}
+
+/**
+    @param: a reference to string name of an input file
+    @pre: Formatting of the csv file is as follows:
+        Title: A string
+        Description: A string
+        Completion Status: 0 (False) or 1 (True)
+        Experience Points: A non negative integer
+        Dependencies: A list of Quest titles of the form [QUEST1];[QUEST2], where each quest is separated by a semicolon. The value may be NONE.
+        Subquests: A list of Quest titles of the form [QUEST1];[QUEST2], where each quest is separated by a semicolon. The value may be NONE.
+    Notes:
+        - The first line of the input file is a header and should be ignored.
+        - The dependencies and subquests are separated by a semicolon and may be NONE.
+        - The dependencies and subquests may be in any order.
+        - If any of the dependencies or subquests are not in the list, they should be created as new quests with the following information:
+            - Title: The title of the quest
+            - Description: "NOT DISCOVERED"
+            - Completion Status: False
+            - Experience Points: 0
+            - Dependencies: An empty vector
+            - Subquests: An empty vector
+        - However, if you eventually encounter a quest that matches one of the "NOT DISCOVERED" quests while parsing the file, you should update all the quest details.
+        Hint: update as needed using addQuest()
         
 
-//     @post: Each line of the input file corresponds to a quest to be added to the list. No duplicates are allowed.
+    @post: Each line of the input file corresponds to a quest to be added to the list. No duplicates are allowed.
 
-// */
-// QuestList::QuestList(const std::string &pFileName)
-// {
+*/
+QuestList::QuestList(const std::string &pFileName)
+{
+    item_count_ = 0;
+    //get access to file
+    std::ifstream questListParameters(pFileName);
 
-// }
+    //check for failure to open file
+    if(questListParameters.fail())
+    {
+        std::cerr << "File cannot be opened for reading." << std::endl;
+        exit(1);//exit if failed to open
+    }
+
+    //remove first line
+    std::string line;
+    getline(questListParameters,line);
+
+    //gonna need bool so we can set first_
+    //i removed this as doubly linkedList may already take care of this
+    //bool firstItem = true;
+
+    while(getline(questListParameters, line))
+    {
+        //Title, Description, Completion, EXP, DEPENDENCIES, SUBQUESTS
+        //  0       1           2           3       4           5
+
+        //loop to get info from line
+        std::vector<std::string> lineInformation;
+
+        while(line.find(",") != -1)
+        {
+            lineInformation.push_back(line.substr(0, line.find(",")));
+            line = line.substr(line.find(",") + 1);
+        }
+        lineInformation.push_back(line);
+
+        //now we create quests
+        //first we need to create the depencies and subs as undiscovered, if they do exists
+        std::vector<Quest*> dep = {};
+        std::vector<Quest*> sub = {};
+
+        //if there are dependencies
+        if(lineInformation[4] != "NONE")
+        {
+            while(line.find(";") != -1)
+            {
+                Quest * newQuest = new Quest(line.substr(0, line.find(";")));
+                dep.push_back(newQuest);
+                line = line.substr(line.find(";") + 1);
+            }
+            //get the last one too
+            Quest * newQuest = new Quest(line.substr(0));
+            dep.push_back(newQuest);
+        }
+        //now same thing for subquests
+        if(lineInformation[5] != "NONE")
+        {
+            while(line.find(";") != -1)
+            {
+                Quest * newQuest = new Quest(line.substr(0, line.find(";")));
+                sub.push_back(newQuest);
+                line = line.substr(line.find(";") + 1);
+            }
+            //get the last one too
+            Quest * newQuest = new Quest(line.substr(0));
+            sub.push_back(newQuest);
+        }
+
+        //finally now that have been instantiated, we can add the main quest;
+        Quest * newMainQuest = new Quest(lineInformation[0], lineInformation[1], std::stoi(lineInformation[2]), std::stoi(lineInformation[3]), dep, sub);
+        addQuest(newMainQuest);
+    }
+
+}
 
 //========================================================
 //unique methods
@@ -220,9 +295,6 @@ void QuestList::printQuest(const Quest *pQuest) const
 
     std::cout << "\n" << pQuest->description_ << "\n" << std::endl;
 }
-
-//gonna need the vector data type for the next method
-#include <vector>   
 
 //helper function for recursion in the next func
 //Kyle's Function for recursive help
