@@ -98,26 +98,56 @@ QuestList::QuestList(const std::string &pFileName)
         {
             while(lineInformation[4].find(";") != -1)
             {
-                Quest * newQuest = new Quest(lineInformation[4].substr(0, lineInformation[4].find(";")));
-                dep.push_back(newQuest);
+                if(this->contains(lineInformation[4].substr(0, lineInformation[4].find(";"))))
+                {
+                    dep.push_back(this->getPointerTo(this->getPosOf(lineInformation[4].substr(0, lineInformation[4].find(";"))))->getItem());
+                }
+                else 
+                {
+                    Quest * newQuest = new Quest(lineInformation[4].substr(0, lineInformation[4].find(";")));
+                    dep.push_back(newQuest);
+                }
                 lineInformation[4] = lineInformation[4].substr(lineInformation[4].find(";") + 1);
             }
             //get the last one too
-            Quest * newQuest = new Quest(lineInformation[4]);
-            dep.push_back(newQuest);
+            if(this->contains(lineInformation[4]))
+            {
+                dep.push_back(this->getPointerTo(this->getPosOf(lineInformation[4]))->getItem());
+            }
+            else
+            {
+                Quest * newQuest = new Quest(lineInformation[4]);
+                dep.push_back(newQuest);
+            }       
         }
+
         //now same thing for subquests
         if(lineInformation[5] != "NONE")
         {
             while(lineInformation[5].find(";") != -1)
             {
-                Quest * newQuest = new Quest(lineInformation[5].substr(0, lineInformation[5].find(";")));
-                sub.push_back(newQuest);
+                if(this->contains(lineInformation[4].substr(0, lineInformation[4].find(";"))))
+                {
+                    sub.push_back(this->getPointerTo(this->getPosOf(lineInformation[5].substr(0, lineInformation[5].find(";"))))->getItem());
+                }
+                else
+                {
+                    Quest * newQuest = new Quest(lineInformation[5].substr(0, lineInformation[5].find(";")));
+                    sub.push_back(newQuest);
+                }
+                
                 lineInformation[5] = lineInformation[5].substr(lineInformation[5].find(";") + 1);
             }
             //get the last one too
-            Quest * newQuest = new Quest(lineInformation[5]);
-            sub.push_back(newQuest);
+            if(this->contains(lineInformation[5]))
+            {
+                sub.push_back(this->getPointerTo(this->getPosOf(lineInformation[5]))->getItem());
+            }
+            else
+            {
+                Quest * newQuest = new Quest(lineInformation[5]);
+                sub.push_back(newQuest);
+            }
         }
 
         //finally now that have been instantiated, we can add the main quest;
@@ -186,13 +216,27 @@ bool QuestList::addQuest(Quest* pQuest)
             //get the ptr to this undiscovered quest by getting the position of it which is passed into to find the pointer of the node and take it's item
             Quest *update = this->getPointerTo(this->getPosOf(pQuest->title_))->getItem();
 
-            //because both ptrs are suppose to be taking the same place, we can delete the old one and replace it with this new ptr
+            //because both ptrs are suppose to be taking the same place, we can delete the old one the value at the old ptr and replace it with the new one
             //delete the value of the quest ptr
             delete update;
             //replaces it with the value held in this depdency
             *update = *pQuest;
+
+            //now for the part that i had to fix later
+            //i also forgot that pQuest is not the same as update, so we have to make pQuest now into update
+            //to avoid memory leak, delete pQuest
+            delete pQuest;
+            //now we make the ptr of pQuest point to the old ptr
+            pQuest = update;
         }
         else return false;
+        // else if(this->getPointerTo(this->getPosOf(pQuest->title_))->getItem()->description_ != "NOT DISCOVERED")
+        // {
+        //     //i also had to add this one to fix my code, for context quest 1 is added through debug but quest 4 also adds it as a dependcy
+        //     //i was thinking of making the quest 4 dependency point to quest 1, but im realizing i dont need to do that here and i can do that that in parmeterized construcotr
+        // }
+
+        
     }
     
 
@@ -262,8 +306,13 @@ bool QuestList::addQuest(std::string pTitle, std::string pDescription, bool pCom
 bool QuestList::depenciesComplete(const Quest *pQuest) const
 {
     for(int i = 0; i < pQuest->dependencies_.size(); i++)
-    {
-        if(pQuest->dependencies_[i]->completed_ == false) return false;
+    {   
+        if(pQuest->dependencies_[i]->completed_ == false)
+        {
+            // std::cout << pQuest->dependencies_[i]->title_ << " c : ";
+            // std::cout << pQuest->dependencies_[i]->completed_ << std::endl;
+            return false;
+        } 
     }
     return true;
 }
