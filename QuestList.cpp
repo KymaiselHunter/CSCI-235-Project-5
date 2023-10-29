@@ -179,3 +179,27 @@ bool QuestList::addQuest(std::string pTitle, std::string pDescription, bool pCom
     //since the previous method already adds a quest to the list, call the other version of the method and return if it works or not
     return this->addQuest(newQuest);
 }
+
+/**
+    @param:  A Quest pointer
+    @return: A boolean indicating if all the given quest's dependencies are completed
+*/
+bool QuestList::depenciesComplete(const Quest *pQuest) const
+{
+    for(int i = 0; i < pQuest->dependencies_.size(); i++)
+    {
+        if(pQuest->dependencies_[i]->completed_ == false) return false;
+    }
+    return true;
+}
+
+/**
+    @param: A Quest pointer
+    @return: A boolean if the given quest is available.
+    Note: For a quest to be available, it must not be completed, and its dependencies must be complete.
+*/
+bool QuestList::questAvailable(const Quest *pQuest) const
+{
+    if(this->depenciesComplete(pQuest) == false || pQuest->completed_ == true) return false;
+    else return true;
+}
