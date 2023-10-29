@@ -402,3 +402,48 @@ int QuestList::calculatePathwayExperience(const Quest *pQuest) const
     }
     return sum;
 }
+
+        
+/**
+    @param: A string reference to a filter with a default value of "NONE".
+    @post: With default filter "NONE": Print out every quest in the list.
+        With filter "COMPLETE":   Only print out the completed quests in the list.
+        With filter "INCOMPLETE": Only print out the incomplete quests in the list.
+        With filter "AVAILABLE":  Only print out the available quests in the list.
+        If an invalid filter is passed, print "Invalid Filter\n"
+    Printing quests should be of the form:
+    [Quest title]: [Complete / Not Complete]  
+    [Quest description]\n
+*/
+void QuestList::questHistory(const std::string &pFilter) const
+{
+    //can also steal the display code for this method
+    if (this->getLength() == 0)
+    {
+        return;
+    }
+    
+    Node<Quest*> *iterator = first_;
+
+    while (iterator != nullptr)
+    {
+        if(pFilter == "NONE")
+        {
+            printQuest(iterator->getItem());
+        }
+        else if((pFilter == "COMPLETE"))
+        {
+            if(iterator->getItem()->completed_) printQuest(iterator->getItem());
+        }
+        else if((pFilter == "INCOMPLETE"))
+        {
+            if(!iterator->getItem()->completed_) printQuest(iterator->getItem());
+        }
+        else if((pFilter == "AVAILABLE"))
+        {
+            if(questAvailable(iterator->getItem())) printQuest(iterator->getItem());
+        }
+        
+        iterator = iterator->getNext();
+    }
+}
