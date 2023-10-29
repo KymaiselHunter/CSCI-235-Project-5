@@ -181,7 +181,7 @@ class QuestList : public DoublyLinkedList<Quest*>
                     
             If the given quest title is not found in the list, print "No such quest."
         */
-        void questQuery(const std::string &pTitle) const;
+        void questQuery(const std::string &pTitle); //this was originally const but my recursion changed that// must come back later
 
         /**
             @return: An integer sum of all the experience gained
@@ -231,6 +231,16 @@ class QuestList : public DoublyLinkedList<Quest*>
         */
         void printQuestDetails(const Quest *pQuest) const;
 
+    //private for recrusvie helper function
+    private:
+        //Kyle's Function for recursive help
+        /**
+            @param: A quest pointer to a quest
+            @param: A vector to the ptrs of ready quests
+            @param: A vector to the ptrs of not ready Quests
+            @post:  uses recursion to add the not ready quests at the lowest level first, also adds readied quests to the ready vecotr
+        */
+        void recursiveQuestQuery(Quest *pQuest, std::vector<Quest*> &pReady, std::vector<Quest*> &pNotReady);
 };
 
 #endif //QuestList_HPP

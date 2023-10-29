@@ -220,3 +220,122 @@ void QuestList::printQuest(const Quest *pQuest) const
 
     std::cout << "\n" << pQuest->description_ << "\n" << std::endl;
 }
+
+//gonna need the vector data type for the next method
+#include <vector>   
+
+//helper function for recursion in the next func
+//Kyle's Function for recursive help
+/**
+    @param: A quest pointer to a quest
+    @param: A vector to the ptrs of ready quests
+    @param: A vector to the ptrs of not ready Quests
+    @post:  uses recursion to add the not ready quests at the lowest level first, also adds readied quests to the ready vecotr
+*/
+void QuestList::recursiveQuestQuery(Quest *pQuest, std::vector<Quest*> &pReady, std::vector<Quest*> &pNotReady)
+{
+    //loop through the dependencies
+    for(int i = 0 ; i < pQuest->dependencies_.size(); i++)
+    {
+        //make an iterator ptr for each iteration in the for loop and to pass through the recursive call if needed
+        Quest *iterator = pQuest->dependencies_[i];
+        
+        //if this dependecy is competed, ignore it
+        if(iterator->completed_ == true) continue;
+        else
+        {
+            //if the dependecies are complete, add to the ready to go funcs
+            //if they aren't that means that it should be added to the not ready vector
+            //but call this function recursively to get the depencies of this depencies added first
+            if(depenciesComplete(iterator)) pReady.push_back(iterator);
+            else
+            {
+                recursiveQuestQuery(iterator, pReady, pNotReady);
+                pNotReady.push_back(iterator);
+            }
+        }
+    }
+}
+
+/**
+    @param: A string reference to a quest title
+    @post:  Prints a list of quests that must to be completed before the given quest can be started (incomplete dependencies).
+            If any of the quest's incomplete dependencies have an incomplete dependency, recursively print the quests that need to be done in order, indenting incomplete quests. 
+            The indentation for incomplete quests is 2 spaces: "  "    
+            The format of the list should be of the following forms for each different case:
+
+            Query: [Quest Title]
+            No such quest.
+    
+            Query: [Quest Title]
+            Quest Complete
+    
+            Query: [Quest Title]
+            Ready: [Quest Title]
+    
+            Query: [Quest Title]
+            Ready: [Dependency0]
+            [Quest Title]
+            
+            Query: [Quest Title]
+            Ready: [Dependency0]
+            Ready: [Dependency1]
+            [Quest Title]
+    
+            Query: [Quest Title]
+            Ready: [Dependency0]
+            Ready: [Dependency1]
+            [Dependency2]
+            [Quest Title]
+            
+    If the given quest title is not found in the list, print "No such quest."
+*/
+void QuestList::questQuery(const std::string &pTitle)
+{
+    //first lets take the test case that it does not exist
+    if(!this->contains(pTitle))
+    {
+        std::cout << "Query: " << pTitle << "\nNo such quest." << std::endl;
+        return;//if this dont exist, leave
+    }
+
+    //the rest of the cases rely on this quest, so lets get a pointer to the quest of this title
+    Quest *currQuest = getPointerTo(this->getPosOf(pTitle))->getItem();
+
+    //second case, the quest it already complete
+    if(currQuest->completed_ == true)
+    {
+        std::cout << "Query: " << pTitle << "\nQuest Complete" << std::endl;
+        return;//if this it's already completed, leave
+    }
+
+    //third case, the quest is already available
+    if(this->depenciesComplete(currQuest))
+    {
+        std::cout << "Query: " << pTitle << "\nReady: " << pTitle << std::endl;
+        return;//if this it's already completed, leave
+    }
+
+    //the last cases are have to do with having required depencies
+    //it says to do this part recursivel for quests that have incomplete dependecies
+    //what?? what even method would we be calling for that? questQuery??, im not getting that, so imma not do that for now //i only understand using a helper function for recursion
+    //come back later, for now i can onlyy see using quest available
+    std::vector<Quest*> readyVector;
+    std::vector<Quest*> notReadyVector;
+
+    recursiveQuestQuery(currQuest, readyVector, notReadyVector);
+    
+    std::cout << "Query: " << pTitle << std::endl;
+    for(int i = 0; i < readyVector.size(); i++)
+    {
+        std::cout << "Ready: " << readyVector[i] << std::endl;
+    }
+
+    for(int i = 0; i < notReadyVector.size(); i++)
+    {
+        std::cout << "  " << notReadyVector[i] << std::endl;
+    }
+
+    std::cout << "  " << pTitle << std::endl;
+}
+
