@@ -102,9 +102,9 @@ bool QuestList::contains(const std::string &pTitle) const
 */
 bool QuestList::addQuest(Quest* pQuest)
 {
-    //removed this because i think im suppose to assume the quest is not already in the questList?
+    //am i supposed to removed this because i think im suppose to assume the quest is not already in the questList?
     //if it fails the precondition, false
-    //if(this->contains(pQuest->title_) == true) return false;
+    if(this->contains(pQuest->title_) == true) return false;
 
     //add using parent class function
     this->insert(this->item_count_, pQuest);
@@ -153,4 +153,30 @@ bool QuestList::addQuest(Quest* pQuest)
             *update = *pQuest->subquests_[i];
         }
     }
+
+    return true;
+}
+
+/**
+    @param:  A reference to string representing the quest title
+    @param:  A reference to string representing the quest description
+    @param:  A reference to boolean representing if the quest is completed
+    @param:  An reference to int representing experience points the quest rewards upon completion 
+    @param:  A reference to vector of Quest pointers representing the quest's dependencies
+    @param:  A reference to vector of Quest pointers representing the quest's subquests
+    @post:   Creates a new Quest object and inserts a pointer to it into the QuestList. 
+            If the quest is already in the list but is marked as "NOT DISCOVERED", update its details. (This happens when a quest has been added to the list through a dependency or subquest list)
+            Each of its dependencies and subquests are also added to the QuestList IF not already in the list.
+            
+
+    @return: True if the quest was added successfully
+
+*/
+bool QuestList::addQuest(std::string pTitle, std::string pDescription, bool pCompleted, int pEXP, std::vector<Quest*> pDependcies, std::vector<Quest*> pSubquests)
+{
+    //take parameters and put it into a new quest
+    Quest * newQuest = new Quest(pTitle, pDescription, pCompleted, pEXP, pDependcies, pSubquests);
+
+    //since the previous method already adds a quest to the list, call the other version of the method and return if it works or not
+    return this->addQuest(newQuest);
 }
