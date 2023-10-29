@@ -339,3 +339,66 @@ void QuestList::questQuery(const std::string &pTitle)
     std::cout << "  " << pTitle << std::endl;
 }
 
+/**
+    @return: An integer sum of all the experience gained
+    Note: This should only include experience from completed quests 
+*/
+int QuestList::calculateGainedExperience() const
+{
+    //i can steal code from the orginal DoublyLinkedList.cpp file
+    //below is modified code of the display method
+    if (this->getLength() == 0)
+    {
+        return;
+    }
+
+    //iterator and int to hold sum of all completed thingys
+    Node<Quest*> *iterator = first_;
+    int sum = 0;
+
+    while (iterator != nullptr)
+    {
+        if(iterator->getItem()->completed_ == true) sum += iterator->getItem()->EXP;
+        iterator = iterator->getNext();
+    }
+    return sum;
+}
+
+/**
+    @param: A quest pointer to a main quest
+    @return: An integer sum of all the experience that can be gained from completing the main quest AND all its subquests.
+    Note: Also consider the potential experience if a subquest itself has subquests.
+*/
+int QuestList::calculateProjectedExperience(const Quest *pQuest) const
+{
+    //right off the bat, the note implies recursion
+    int sum = pQuest->EXP;
+    //lowkey, this may not work and may count the same quest multiple times if subquests share a subquest
+    for(int i = 0; i < pQuest->subquests_.size(); i++)
+    {
+        sum += calculateProjectedExperience(pQuest->subquests_[i]);
+    }
+    return sum;
+}
+
+/**
+    @param: A quest pointer to a main quest
+    @return: An integer sum of all the experience that has already been gained by completing the given quest's subquests.
+    Note: Also consider the experience gained if a completed subquest itself has subquests.  
+*/
+int QuestList::calculatePathwayExperience(const Quest *pQuest) const
+{
+    //almost the same thing as the previous method but check if the subquest is also completed
+    //also different, do not include main quest
+    int sum = 0;
+
+    for(int i = 0; i < pQuest->subquests_.size(); i++)
+    {
+        if(pQuest->subquests_[i]->completed_)
+        {
+            sum += pQuest->subquests_[i]->EXP;
+            sum += calculateProjectedExperience(pQuest->subquests_[i]);
+        }
+    }
+    return sum;
+}

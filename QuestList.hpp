@@ -194,7 +194,7 @@ class QuestList : public DoublyLinkedList<Quest*>
             @return: An integer sum of all the experience that can be gained from completing the main quest AND all its subquests.
             Note: Also consider the potential experience if a subquest itself has subquests.
         */
-        int calculateProjectedExperience() const;
+        int calculateProjectedExperience(const Quest *pQuest) const;
 
         /**
             @param: A quest pointer to a main quest
