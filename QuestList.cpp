@@ -462,7 +462,7 @@ int QuestList::calculatePathwayExperience(const Quest *pQuest) const
 {
     //almost the same thing as the previous method but check if the subquest is also completed
     //also different, do not include main quest
-    int sum = 0;
+    int sum = pQuest->EXP;
 
     for(int i = 0; i < pQuest->subquests_.size(); i++)
     {
@@ -560,7 +560,7 @@ void QuestList::recursiveQuestDetails(Quest *pQuest, int depth)
 */
 void QuestList::printQuestDetails(const Quest *pQuest)
 {
-    std::cout << pQuest->title_ << " (" << (calculatePathwayExperience(pQuest) / calculateProjectedExperience(pQuest)) << "% Complete)";
+    std::cout << pQuest->title_ << " (" << ((calculatePathwayExperience(pQuest) / calculateProjectedExperience(pQuest))*100) << "% Complete)";
 
     for(int i = 0; i < pQuest->dependencies_.size(); i++)
     {
