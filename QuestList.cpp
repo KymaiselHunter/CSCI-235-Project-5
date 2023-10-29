@@ -203,3 +203,20 @@ bool QuestList::questAvailable(const Quest *pQuest) const
     if(this->depenciesComplete(pQuest) == false || pQuest->completed_ == true) return false;
     else return true;
 }
+
+/**
+    @param: A Quest pointer
+    @post: Prints the quest title and completion status
+    The output should be of the form:
+    [Quest Title]: [Complete / Not Complete]
+    [Quest Description]\n\n
+*/
+void QuestList::printQuest(const Quest *pQuest) const
+{
+    std::cout << pQuest->title_ << ": ";
+
+    if(pQuest->completed_) std::cout << "Complete";
+    else std::cout << "Not Complete";
+
+    std::cout << "\n" << pQuest->description_ << "\n" << std::endl;
+}
