@@ -589,9 +589,9 @@ void QuestList::recursiveQuestDetails(Quest *pQuest, int depth)
 
     std::cout << output << std::endl;
 
-    for(int i = 0; i < pQuest->dependencies_.size(); i++)
+    for(int i = 0; i < pQuest->subquests_.size(); i++)
     {
-        recursiveQuestDetails(pQuest->dependencies_[i], depth + 1);
+        recursiveQuestDetails(pQuest->subquests_[i], depth + 1);
     }
 }
 
@@ -609,11 +609,11 @@ void QuestList::recursiveQuestDetails(Quest *pQuest, int depth)
 */
 void QuestList::printQuestDetails(const Quest *pQuest)
 {
-    std::cout << pQuest->title_ << " (" << ((calculatePathwayExperience(pQuest) / calculateProjectedExperience(pQuest))*100) << "% Complete)";
+    std::cout << pQuest->title_ << " (" << ((calculatePathwayExperience(pQuest) / calculateProjectedExperience(pQuest))*100) << "% Complete)" << std::endl;;
 
-    for(int i = 0; i < pQuest->dependencies_.size(); i++)
+    for(int i = 0; i < pQuest->subquests_.size(); i++)
     {
-        recursiveQuestDetails(pQuest->dependencies_[i]);
+        recursiveQuestDetails(pQuest->subquests_[i]);
     }
 
 }

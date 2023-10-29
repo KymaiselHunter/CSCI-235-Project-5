@@ -58,5 +58,37 @@ int main()
     Quest* current = questList.getPointerTo(questList.getPosOf("Quest 1"))->getItem();
     questList.printQuestDetails(current);
     std::cout<<std::endl;
+    
+    current = questList.getPointerTo(questList.getPosOf("Quest 2"))->getItem();
+    questList.printQuestDetails(current);
+    std::cout<<std::endl;
+
+    current = questList.getPointerTo(questList.getPosOf("Quest 3"))->getItem();
+    questList.printQuestDetails(current);
+    std::cout<<std::endl;
+
+    current = questList.getPointerTo(questList.getPosOf("Quest 4"))->getItem();
+    questList.printQuestDetails(current);
+    std::cout<<std::endl;
+
+    current = questList.getPointerTo(questList.getPosOf("Quest 5"))->getItem();
+    questList.printQuestDetails(current);
+    std::cout<<std::endl;
+
+    current = questList.getPointerTo(questList.getPosOf("Quest 6"))->getItem();
+    questList.printQuestDetails(current);
+    std::cout<<std::endl;
+
+    current = questList.getPointerTo(questList.getPosOf("Quest 7"))->getItem();
+    questList.printQuestDetails(current);
+    std::cout<<std::endl;
+
+    current = questList.getPointerTo(questList.getPosOf("Quest 8"))->getItem();
+    questList.printQuestDetails(current);
+    std::cout<<std::endl;
+
+    current = questList.getPointerTo(questList.getPosOf("Quest 9"))->getItem();
+    questList.printQuestDetails(current);
+    std::cout<<std::endl;
 
 }
