@@ -421,7 +421,7 @@ int QuestList::calculateGainedExperience() const
     //below is modified code of the display method
     if (this->getLength() == 0)
     {
-        return;
+        return 0;
     }
 
     //iterator and int to hold sum of all completed thingys
