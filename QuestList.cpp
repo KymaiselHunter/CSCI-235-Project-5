@@ -103,8 +103,23 @@ bool QuestList::contains(const std::string &pTitle) const
 bool QuestList::addQuest(Quest* pQuest)
 {
     //am i supposed to removed this because i think im suppose to assume the quest is not already in the questList?
-    //if it fails the precondition, false
-    if(this->contains(pQuest->title_) == true) return false;
+    //if it fails the precondition, of having this quest already exist, return false; unless it is undiscovered, then update
+    if(this->contains(pQuest->title_) == true)
+    {
+        if(this->getPointerTo(this->getPosOf(pQuest->title_))->getItem()->description_ == "NOT DISCOVERED" && pQuest->description_ != "NOT DISCOVERED")
+        {
+            //get the ptr to this undiscovered quest by getting the position of it which is passed into to find the pointer of the node and take it's item
+            Quest *update = this->getPointerTo(this->getPosOf(pQuest->title_))->getItem();
+
+            //because both ptrs are suppose to be taking the same place, we can delete the old one and replace it with this new ptr
+            //delete the value of the quest ptr
+            delete update;
+            //replaces it with the value held in this depdency
+            *update = *pQuest;
+        }
+        else return false;
+    }
+    
 
     //add using parent class function
     this->insert(this->item_count_, pQuest);
