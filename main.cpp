@@ -34,6 +34,8 @@ int main()
     questList.questQuery("Quest 4");
     std::cout<<std::endl;
 
+    
+
     questList.questQuery("Quest 5");
     std::cout<<std::endl;
 
@@ -49,9 +51,9 @@ int main()
     questList.questQuery("Quest 9");
     std::cout<<std::endl;
 
-    std::cout << "Testing printQuestDetails:" << std::endl<< std::endl;
-    Quest* current = questList.getPointerTo(questList.getPosOf("Quest 1"))->getItem();
-    questList.printQuestDetails(current);
-    std::cout<<std::endl;
+    // std::cout << "Testing printQuestDetails:" << std::endl<< std::endl;
+    // Quest* current = questList.getPointerTo(questList.getPosOf("Quest 1"))->getItem();
+    // questList.printQuestDetails(current);
+    // std::cout<<std::endl;
 
 }

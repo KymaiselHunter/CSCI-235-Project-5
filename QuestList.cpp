@@ -96,27 +96,27 @@ QuestList::QuestList(const std::string &pFileName)
         //if there are dependencies
         if(lineInformation[4] != "NONE")
         {
-            while(line.find(";") != -1)
+            while(lineInformation[4].find(";") != -1)
             {
-                Quest * newQuest = new Quest(line.substr(0, line.find(";")));
+                Quest * newQuest = new Quest(lineInformation[4].substr(0, lineInformation[4].find(";")));
                 dep.push_back(newQuest);
-                line = line.substr(line.find(";") + 1);
+                lineInformation[4] = lineInformation[4].substr(lineInformation[4].find(";") + 1);
             }
             //get the last one too
-            Quest * newQuest = new Quest(line.substr(0));
+            Quest * newQuest = new Quest(lineInformation[4]);
             dep.push_back(newQuest);
         }
         //now same thing for subquests
         if(lineInformation[5] != "NONE")
         {
-            while(line.find(";") != -1)
+            while(lineInformation[5].find(";") != -1)
             {
-                Quest * newQuest = new Quest(line.substr(0, line.find(";")));
+                Quest * newQuest = new Quest(lineInformation[5].substr(0, lineInformation[5].find(";")));
                 sub.push_back(newQuest);
-                line = line.substr(line.find(";") + 1);
+                lineInformation[5] = lineInformation[5].substr(lineInformation[5].find(";") + 1);
             }
             //get the last one too
-            Quest * newQuest = new Quest(line.substr(0));
+            Quest * newQuest = new Quest(lineInformation[5]);
             sub.push_back(newQuest);
         }
 
