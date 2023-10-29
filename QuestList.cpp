@@ -94,7 +94,7 @@ QuestList::QuestList(const std::string &pFileName)
         std::vector<Quest*> sub = {};
 
         //if there are dependencies
-        if(lineInformation[4] != "NONE")
+        if(lineInformation[4].find("NONE"))
         {
             while(lineInformation[4].find(";") != -1)
             {
@@ -122,11 +122,11 @@ QuestList::QuestList(const std::string &pFileName)
         }
 
         //now same thing for subquests
-        if(lineInformation[5] != "NONE")
+        if(lineInformation[5].find("NONE") == -1)
         {
             while(lineInformation[5].find(";") != -1)
             {
-                if(this->contains(lineInformation[4].substr(0, lineInformation[4].find(";"))))
+                if(this->contains(lineInformation[5].substr(0, lineInformation[5].find(";"))))
                 {
                     sub.push_back(this->getPointerTo(this->getPosOf(lineInformation[5].substr(0, lineInformation[5].find(";"))))->getItem());
                 }
@@ -511,14 +511,16 @@ int QuestList::calculatePathwayExperience(const Quest *pQuest) const
 {
     //almost the same thing as the previous method but check if the subquest is also completed
     //also different, do not include main quest
-    int sum = pQuest->EXP;
+    int sum = 0;
+    std::cout << pQuest->completed_ << std::endl;
+    if(pQuest->completed_) sum += pQuest->EXP;
 
     for(int i = 0; i < pQuest->subquests_.size(); i++)
     {
         if(pQuest->subquests_[i]->completed_)
         {
             sum += pQuest->subquests_[i]->EXP;
-            sum += calculateProjectedExperience(pQuest->subquests_[i]);
+            sum += calculatePathwayExperience(pQuest->subquests_[i]);
         }
     }
     return sum;
@@ -568,6 +570,7 @@ void QuestList::questHistory(const std::string &pFilter) const
         iterator = iterator->getNext();
     }
 }
+#include <string>
 
 /**
     @param: A quest pointer to a subquest
@@ -581,6 +584,7 @@ void QuestList::recursiveQuestDetails(Quest *pQuest, int depth)
     {
         output += "  ";
     }
+    
     output += pQuest->title_;
     output += ": ";
 
@@ -593,6 +597,23 @@ void QuestList::recursiveQuestDetails(Quest *pQuest, int depth)
     {
         recursiveQuestDetails(pQuest->subquests_[i], depth + 1);
     }
+
+    //Originally my code looked like this but for some reason the string aint holding my stuffs?
+    /*
+    std::string output = "";//need an empty string for indentations 
+    for(int i = 0; i < depth; i++)
+    {
+        output += "  ";
+    }
+    
+    output += pQuest->title_;
+    output += ": ";
+
+    if(pQuest->completed_) output += "Complete";
+    else output += "Not Complete";
+
+    std::cout << output << std::endl;
+    */
 }
 
 /**
@@ -609,10 +630,12 @@ void QuestList::recursiveQuestDetails(Quest *pQuest, int depth)
 */
 void QuestList::printQuestDetails(const Quest *pQuest)
 {
-    std::cout << pQuest->title_ << " (" << ((calculatePathwayExperience(pQuest) / calculateProjectedExperience(pQuest))*100) << "% Complete)" << std::endl;;
+    std::cout << calculatePathwayExperience(pQuest) << " " << calculateProjectedExperience(pQuest) << std::endl;
+    std::cout << pQuest->title_ << " (" << ((calculatePathwayExperience(pQuest) / calculateProjectedExperience(pQuest))*100) << "Complete)" << std::endl;;
 
     for(int i = 0; i < pQuest->subquests_.size(); i++)
     {
+        //std::cout << pQuest->subquests_[i]->title_ << std::endl;
         recursiveQuestDetails(pQuest->subquests_[i]);
     }
 
