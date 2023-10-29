@@ -400,12 +400,12 @@ void QuestList::questQuery(const std::string &pTitle)
     std::cout << "Query: " << pTitle << std::endl;
     for(int i = 0; i < readyVector.size(); i++)
     {
-        std::cout << "Ready: " << readyVector[i] << std::endl;
+        std::cout << "Ready: " << readyVector[i]->title_ << std::endl;
     }
 
     for(int i = 0; i < notReadyVector.size(); i++)
     {
-        std::cout << "  " << notReadyVector[i] << std::endl;
+        std::cout << "  " << notReadyVector[i]->title_ << std::endl;
     }
 
     std::cout << "  " << pTitle << std::endl;
