@@ -157,7 +157,7 @@ QuestList::QuestList(const std::string &pFileName)
         
         addQuest(newMainQuest);
     }
-
+    questListParameters.close();
 }
 
 //========================================================
