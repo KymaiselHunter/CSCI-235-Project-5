@@ -233,7 +233,7 @@ class QuestList : public DoublyLinkedList<Quest*>
 
         //helper function just to visualize the linkedList, going to steal the display code again
         /**
-         * @post: prints the entire list along with their pointer value
+         * @post: prints the titles of all quest withing the list along with their pointer value
         */
         void KyleDisplay() const;
 
