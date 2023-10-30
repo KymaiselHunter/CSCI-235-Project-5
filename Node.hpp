@@ -1,5 +1,5 @@
-//  Created by Frank M. Carrano and Timothy M. Henry.
-//  Copyright (c) 2017 Pearson Education, Hoboken, New Jersey.
+//Â  Created by Frank M. Carrano and Timothy M. Henry.
+//Â  Copyright (c) 2017 Pearson Education, Hoboken, New Jersey.
 //  Modified by Tiziana Ligorio for CSCI 235 Hunter College 
 
 #ifndef NODE_HPP_
@@ -12,7 +12,7 @@ class Node
 public:
    Node(); //default constructor
    Node(const ItemType& an_item); // parameterized constructor
-   Node(const ItemType& an_item, Node<ItemType>* next_node_ptr); // parameterized constructor
+   Node(const ItemType& an_item, Node<ItemType>* prev_node_ptr, Node<ItemType>* next_node_ptr); // parameterized constructor
     
    /**@param an_item the data item */
    void setItem(const ItemType& an_item);

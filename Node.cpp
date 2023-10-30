@@ -8,11 +8,11 @@ Hunter College
     Default Constructor
 */
 template <class ItemType>
-Node<ItemType>::Node() : next_{nullptr} {}
+Node<ItemType>::Node() : previous_{nullptr}, next_{nullptr} {}
 
 // parameterized constructor
 template <class ItemType>
-Node<ItemType>::Node(const ItemType& an_item) : item_{an_item}, next_{nullptr} {}
+Node<ItemType>::Node(const ItemType& an_item) : item_{an_item}, previous_{nullptr}, next_{nullptr} {}
 
 /*
     Parametarized Constructor
@@ -20,7 +20,7 @@ Node<ItemType>::Node(const ItemType& an_item) : item_{an_item}, next_{nullptr} {
     @param next_node - the next node to point to
  */
 template <class ItemType>
-Node<ItemType>::Node(const ItemType& item, Node<ItemType> *next_node) : item_{item}, next_{next_node} {}
+Node<ItemType>::Node(const ItemType& item, Node<ItemType> *prev_node, Node<ItemType> *next_node) : item_{item}, previous_{prev_node}, next_{next_node} {}
 
 
 /*
