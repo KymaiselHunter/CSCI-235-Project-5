@@ -231,6 +231,12 @@ class QuestList : public DoublyLinkedList<Quest*>
         */
         void printQuestDetails(const Quest *pQuest);
 
+        //helper function just to visualize the linkedList, going to steal the display code again
+        /**
+         * @post: prints the entire list along with their pointer value
+        */
+        void KyleDisplay() const;
+
     //private for recrusvie helper function
     private:
         //Kyle's Function for recursive help

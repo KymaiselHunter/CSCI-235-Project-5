@@ -118,7 +118,7 @@ QuestList::QuestList(const std::string &pFileName)
             {
                 Quest * newQuest = new Quest(lineInformation[4]);
                 dep.push_back(newQuest);
-            }       
+            }     
         }
 
         //now same thing for subquests
@@ -139,6 +139,8 @@ QuestList::QuestList(const std::string &pFileName)
                 lineInformation[5] = lineInformation[5].substr(lineInformation[5].find(";") + 1);
             }
             //get the last one too
+            //remove the space at the end
+            lineInformation[5] = lineInformation[5].substr(0, lineInformation[5].length()-1);
             if(this->contains(lineInformation[5]))
             {
                 sub.push_back(this->getPointerTo(this->getPosOf(lineInformation[5]))->getItem());
@@ -152,6 +154,7 @@ QuestList::QuestList(const std::string &pFileName)
 
         //finally now that have been instantiated, we can add the main quest;
         Quest * newMainQuest = new Quest(lineInformation[0], lineInformation[1], std::stoi(lineInformation[2]), std::stoi(lineInformation[3]), dep, sub);
+        
         addQuest(newMainQuest);
     }
 
@@ -215,10 +218,8 @@ bool QuestList::addQuest(Quest* pQuest)
         {
             //get the ptr to this undiscovered quest by getting the position of it which is passed into to find the pointer of the node and take it's item
             Quest *update = this->getPointerTo(this->getPosOf(pQuest->title_))->getItem();
-
+            
             //because both ptrs are suppose to be taking the same place, we can delete the old one the value at the old ptr and replace it with the new one
-            //delete the value of the quest ptr
-            delete update;
             //replaces it with the value held in this depdency
             *update = *pQuest;
 
@@ -228,21 +229,23 @@ bool QuestList::addQuest(Quest* pQuest)
             delete pQuest;
             //now we make the ptr of pQuest point to the old ptr
             pQuest = update;
+             
         }
         else return false;
         // else if(this->getPointerTo(this->getPosOf(pQuest->title_))->getItem()->description_ != "NOT DISCOVERED")
         // {
         //     //i also had to add this one to fix my code, for context quest 1 is added through debug but quest 4 also adds it as a dependcy
         //     //i was thinking of making the quest 4 dependency point to quest 1, but im realizing i dont need to do that here and i can do that that in parmeterized construcotr
+
+        //     //i came back to this as i was having issue with print quest details where quest 1 was made in the parmeterized constructor but in the subquest for quest 3, 
         // }
-
-        
     }
-    
+    else
+    {
+        //add using parent class function
+        this->insert(this->item_count_, pQuest);
+    }
 
-    //add using parent class function
-    this->insert(this->item_count_, pQuest);
-    
     //add dependencies and subquests
     //loop through dependecies vector
     for(int i = 0; i < pQuest->dependencies_.size(); i++)
@@ -512,15 +515,17 @@ int QuestList::calculatePathwayExperience(const Quest *pQuest) const
     //almost the same thing as the previous method but check if the subquest is also completed
     //also different, do not include main quest
     int sum = 0;
-    std::cout << pQuest->completed_ << std::endl;
+    std::cout << "BITCH " << pQuest->title_ << " ptr: " << pQuest << std::endl;
     if(pQuest->completed_) sum += pQuest->EXP;
 
     for(int i = 0; i < pQuest->subquests_.size(); i++)
     {
-        if(pQuest->subquests_[i]->completed_)
+        Quest *iterator = pQuest->subquests_[i];
+        std::cout << "subBitch : " <<pQuest->title_ <<" ptr: " << (iterator) << std::endl;
+        if(iterator->completed_)
         {
             sum += pQuest->subquests_[i]->EXP;
-            sum += calculatePathwayExperience(pQuest->subquests_[i]);
+            sum += calculatePathwayExperience(iterator);
         }
     }
     return sum;
@@ -631,7 +636,7 @@ void QuestList::recursiveQuestDetails(Quest *pQuest, int depth)
 void QuestList::printQuestDetails(const Quest *pQuest)
 {
     std::cout << calculatePathwayExperience(pQuest) << " " << calculateProjectedExperience(pQuest) << std::endl;
-    std::cout << pQuest->title_ << " (" << ((calculatePathwayExperience(pQuest) / calculateProjectedExperience(pQuest))*100) << "Complete)" << std::endl;;
+    std::cout << pQuest->title_ << " (" << ((calculatePathwayExperience(pQuest) / calculateProjectedExperience(pQuest))*100) << "% Complete)" << std::endl;
 
     for(int i = 0; i < pQuest->subquests_.size(); i++)
     {
@@ -639,4 +644,23 @@ void QuestList::printQuestDetails(const Quest *pQuest)
         recursiveQuestDetails(pQuest->subquests_[i]);
     }
 
+}
+
+//helper function just to visualize the linkedList, going to steal the display code again
+/**
+ * @post: prints the entire list along with their pointer value
+*/
+void QuestList::KyleDisplay() const
+{
+    if (getLength() == 0)
+    {
+        return;
+    }
+    Node<Quest*> *iterator = first_;
+    while (iterator != nullptr)
+    {
+        std::cout << iterator->getItem()->title_ << " : " << iterator->getItem() << std::endl;
+        iterator = iterator->getNext();
+    }
+    std::cout << std::endl;
 }
