@@ -52,7 +52,7 @@ QuestList::QuestList(): DoublyLinkedList<Quest*>()
     @post: Each line of the input file corresponds to a quest to be added to the list. No duplicates are allowed.
 
 */
-QuestList::QuestList(const std::string &pFileName)
+QuestList::QuestList(const std::string &pFileName) : DoublyLinkedList<Quest*>()
 {
     item_count_ = 0;
     //get access to file
@@ -293,7 +293,7 @@ bool QuestList::addQuest(Quest* pQuest)
     @return: True if the quest was added successfully
 
 */
-bool QuestList::addQuest(std::string pTitle, std::string pDescription, bool pCompleted, int pEXP, std::vector<Quest*> pDependcies, std::vector<Quest*> pSubquests)
+bool QuestList::addQuest(const std::string & pTitle, const std::string & pDescription, const bool &pCompleted, const int &pEXP, const std::vector<Quest*> &pDependcies, const std::vector<Quest*> &pSubquests)
 {
     //take parameters and put it into a new quest
     Quest * newQuest = new Quest(pTitle, pDescription, pCompleted, pEXP, pDependcies, pSubquests);
