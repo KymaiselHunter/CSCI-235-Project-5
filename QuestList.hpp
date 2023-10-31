@@ -130,7 +130,7 @@ class QuestList : public DoublyLinkedList<Quest*>
             @param:  A Quest pointer
             @return: A boolean indicating if all the given quest's dependencies are completed
         */
-        bool depenciesComplete(const Quest *pQuest) const;
+        bool dependenciesComplete(const Quest *pQuest) const;
 
         /**
             @param: A Quest pointer

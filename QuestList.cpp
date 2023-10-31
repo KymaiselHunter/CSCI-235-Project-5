@@ -306,7 +306,7 @@ bool QuestList::addQuest(std::string pTitle, std::string pDescription, bool pCom
     @param:  A Quest pointer
     @return: A boolean indicating if all the given quest's dependencies are completed
 */
-bool QuestList::depenciesComplete(const Quest *pQuest) const
+bool QuestList::dependenciesComplete(const Quest *pQuest) const
 {
     for(int i = 0; i < pQuest->dependencies_.size(); i++)
     {   
@@ -327,7 +327,7 @@ bool QuestList::depenciesComplete(const Quest *pQuest) const
 */
 bool QuestList::questAvailable(const Quest *pQuest) const
 {
-    if(this->depenciesComplete(pQuest) == false || pQuest->completed_ == true) return false;
+    if(this->dependenciesComplete(pQuest) == false || pQuest->completed_ == true) return false;
     else return true;
 }
 
@@ -371,7 +371,7 @@ void QuestList::recursiveQuestQuery(Quest *pQuest, std::vector<Quest*> &pReady, 
             //if the dependecies are complete, add to the ready to go funcs
             //if they aren't that means that it should be added to the not ready vector
             //but call this function recursively to get the depencies of this depencies added first
-            if(depenciesComplete(iterator)) pReady.push_back(iterator);
+            if(dependenciesComplete(iterator)) pReady.push_back(iterator);
             else
             {
                 recursiveQuestQuery(iterator, pReady, pNotReady);
@@ -434,7 +434,7 @@ void QuestList::questQuery(const std::string &pTitle)
     }
 
     //third case, the quest is already available
-    if(this->depenciesComplete(currQuest))
+    if(this->dependenciesComplete(currQuest))
     {
         std::cout << "Query: " << pTitle << "\nReady: " << pTitle << std::endl;
         return;//if this it's already completed, leave
