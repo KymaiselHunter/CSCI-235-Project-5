@@ -29,8 +29,7 @@ struct Quest
         Default Constructor
         @post: Creates a new Quest object with default values (zero-initialized)
     */
-    Quest() : 
-    title_("N/A"), description_("NOT DISCOVERED"), completed_(false), experiencePoints_(0), dependencies_({}), subquests_({}) {}
+    Quest() : completed_(false), experiencePoints_(0), dependencies_({}), subquests_({}) {}
 
     /*
     @param: A string reference to a quest title
