@@ -482,7 +482,7 @@ int QuestList::calculateGainedExperience() const
 
     while (iterator != nullptr)
     {
-        if(iterator->getItem()->completed_ == true) sum += iterator->getItem()->EXP;
+        if(iterator->getItem()->completed_ == true) sum += iterator->getItem()->experiencePoints_;
         iterator = iterator->getNext();
     }
     return sum;
@@ -496,7 +496,7 @@ int QuestList::calculateGainedExperience() const
 int QuestList::calculateProjectedExperience(const Quest *pQuest) const
 {
     //right off the bat, the note implies recursion
-    int sum = pQuest->EXP;
+    int sum = pQuest->experiencePoints_;
     //lowkey, this may not work and may count the same quest multiple times if subquests share a subquest
     for(int i = 0; i < pQuest->subquests_.size(); i++)
     {
@@ -515,7 +515,7 @@ int QuestList::calculatePathwayExperience(const Quest *pQuest) const
     //almost the same thing as the previous method but check if the subquest is also completed
     //also different, do not include main quest//wait do i?
     int sum = 0;
-    if(pQuest->completed_) sum += pQuest->EXP;
+    if(pQuest->completed_) sum += pQuest->experiencePoints_;
 
     for(int i = 0; i < pQuest->subquests_.size(); i++)
     {
