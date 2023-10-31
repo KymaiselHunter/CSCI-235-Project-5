@@ -548,6 +548,11 @@ void QuestList::questHistory(const std::string &pFilter) const
         return;
     }
     
+    if(pFilter != "NONE" && pFilter != "COMPLETE" && pFilter != "INCOMPLETE" && pFilter != "AVAILABLE")
+    {
+        std::cout << "Invalid Filter" << std::endl; 
+    }
+
     Node<Quest*> *iterator = first_;
 
     while (iterator != nullptr)

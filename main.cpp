@@ -102,9 +102,43 @@ int main()
     questList.printQuestDetails(current);
     std::cout<<std::endl;
 
-    //lets also test functions that we are not given to test
-    questList.questHistory();
-    cout << "Total gained Experience: " << questList.calculateGainedExperience() << endl;
+    // //lets also test functions that we are not given to test
+    // questList.questHistory();
+    // cout << "Total gained Experience: " << questList.calculateGainedExperience() << endl;
+
+    //lets test quest history
+    std::cout << "===================================" << std::endl;
+    std::cout << "Testing quest History" << std::endl;
+    std::cout << "===================================" << std::endl;
+
+    std::cout << "===================================" << std::endl;
+    std::cout << "No filter" << std::endl;
+    std::cout << "===================================" << std::endl;
+    questList.questHistory();//none
+
+    std::cout << "===================================" << std::endl;
+    std::cout << "COMPLETE" << std::endl;
+    std::cout << "===================================" << std::endl;
+
+    questList.questHistory("COMPLETE");//complete
+
+
+    std::cout << "===================================" << std::endl;
+    std::cout << "INCOMPLETE" << std::endl;
+    std::cout << "===================================" << std::endl;
+
+    questList.questHistory("INCOMPLETE");
+    
+    std::cout << "===================================" << std::endl;
+    std::cout << "AVAILABLE" << std::endl;
+    std::cout << "===================================" << std::endl;
+    questList.questHistory("AVAILABLE");
+
+    std::cout << "===================================" << std::endl;
+    std::cout << "Invalid filter" << std::endl;
+    std::cout << "===================================" << std::endl;
+    questList.questHistory("rahhhhh");
+
 
 }
 
