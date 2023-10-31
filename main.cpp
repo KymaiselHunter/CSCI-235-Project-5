@@ -102,6 +102,10 @@ int main()
     questList.printQuestDetails(current);
     std::cout<<std::endl;
 
+    //lets also test functions that we are not given to test
+    questList.questHistory();
+    cout << "Total gained Experience: " << questList.calculateGainedExperience() << endl;
+
 }
 
 // int main()
