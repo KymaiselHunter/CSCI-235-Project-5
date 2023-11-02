@@ -149,7 +149,7 @@ QuestList::QuestList(const std::string &pFileName) : DoublyLinkedList<Quest*>()
             {
                 Quest * newQuest = new Quest(lineInformation[5]);
                 sub.push_back(newQuest);
-            }
+            }        
         }
 
         //finally now that have been instantiated, we can add the main quest;
@@ -661,6 +661,51 @@ void QuestList::KyleDisplay() const
     while (iterator != nullptr)
     {
         std::cout << iterator->getItem()->title_ << " : " << iterator->getItem() << std::endl;
+        iterator = iterator->getNext();
+    }
+    std::cout << std::endl;
+}
+
+//same idea as the last display, but include the member variables and subs and deps and their ptrs
+/**
+ * @post: prints the titles of all quest withing the list along with their pointer value and all their details 
+*/
+void QuestList::KyleFullDisplay() const
+{
+    if (getLength() == 0)
+    {
+        return;
+    }
+    Node<Quest*> *iterator = first_;
+    while (iterator != nullptr)
+    {
+        std::cout << iterator->getItem()->title_ << " : " << iterator->getItem() << std::endl;
+        std::cout << "Descriptions: " << iterator->getItem()->description_ << std::endl;
+        std::cout << "Completed: " << iterator->getItem()->completed_ << std::endl;
+        std::cout << "Experience Points: " << iterator->getItem()->experiencePoints_ << std::endl;
+        
+        if(iterator->getItem()->dependencies_.size() != 0)
+        {
+            std::cout << "Dependents: \n{"<< std::endl;
+            for(int i = 0; i < iterator->getItem()->dependencies_.size(); i++)
+            {
+                std::cout << "  " << iterator->getItem()->dependencies_[i]->title_ << " : " << iterator->getItem()->dependencies_[i] << std::endl;
+            }       
+            std::cout << "}"<< std::endl;
+        }
+
+        if(iterator->getItem()->subquests_.size() != 0)
+        {        
+            std::cout << "Subsequents: \n{"<< std::endl;
+            for(int i = 0; i < iterator->getItem()->subquests_.size(); i++)
+            {
+                std::cout << "  " << iterator->getItem()->subquests_[i]->title_ << " : " << iterator->getItem()->subquests_[i] << std::endl;
+            }
+            std::cout << "}" << std::endl;
+        }
+        
+        std::cout << std::endl;
+
         iterator = iterator->getNext();
     }
     std::cout << std::endl;

@@ -236,6 +236,12 @@ class QuestList : public DoublyLinkedList<Quest*>
         */
         void KyleDisplay() const;
 
+        //same idea as the last display, but include the member variables and subs and deps and their ptrs
+        /**
+         * @post: prints the titles of all quest withing the list along with their pointer value and all their details 
+        */
+        void KyleFullDisplay() const;
+
     //private for recrusvie helper function
     private:
         //Kyle's Function for recursive help

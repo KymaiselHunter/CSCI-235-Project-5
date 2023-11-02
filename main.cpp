@@ -140,6 +140,12 @@ int main()
     questList.questHistory("rahhhhh");
 
 
+    std::cout << "===================================" << std::endl;
+    std::cout << "Kyle's Display" << std::endl;
+    std::cout << "===================================" << std::endl;
+
+    questList.KyleFullDisplay();
+
 }
 
 // int main()
