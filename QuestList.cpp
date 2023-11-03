@@ -482,7 +482,7 @@ int QuestList::calculateGainedExperience() const
 
     while (iterator != nullptr)
     {
-        if(iterator->getItem()->completed_ == true) sum += iterator->getItem()->experiencePoints_;
+        if(iterator->getItem()->completed_ == true) sum += iterator->getItem()->experience_points_;
         iterator = iterator->getNext();
     }
     return sum;
@@ -496,7 +496,7 @@ int QuestList::calculateGainedExperience() const
 int QuestList::calculateProjectedExperience(const Quest *pQuest) const
 {
     //right off the bat, the note implies recursion
-    int sum = pQuest->experiencePoints_;
+    int sum = pQuest->experience_points_;
     //lowkey, this may not work and may count the same quest multiple times if subquests share a subquest
     for(int i = 0; i < pQuest->subquests_.size(); i++)
     {
@@ -515,7 +515,7 @@ int QuestList::calculatePathwayExperience(const Quest *pQuest) const
     //almost the same thing as the previous method but check if the subquest is also completed
     //also different, do not include main quest//wait do i?
     int sum = 0;
-    if(pQuest->completed_) sum += pQuest->experiencePoints_;
+    if(pQuest->completed_) sum += pQuest->experience_points_;
 
     for(int i = 0; i < pQuest->subquests_.size(); i++)
     {
@@ -682,7 +682,7 @@ void QuestList::KyleFullDisplay() const
         std::cout << iterator->getItem()->title_ << " : " << iterator->getItem() << std::endl;
         std::cout << "Descriptions: " << iterator->getItem()->description_ << std::endl;
         std::cout << "Completed: " << iterator->getItem()->completed_ << std::endl;
-        std::cout << "Experience Points: " << iterator->getItem()->experiencePoints_ << std::endl;
+        std::cout << "Experience Points: " << iterator->getItem()->experience_points_ << std::endl;
         
         if(iterator->getItem()->dependencies_.size() != 0)
         {

@@ -20,7 +20,7 @@ struct Quest
     std::string title_;
     std::string description_;
     bool completed_;
-    int experiencePoints_;//this was changed on the specifications, will reupload, lets see if it still compiles
+    int experience_points_;//this was changed on the specifications, will reupload, lets see if it still compiles
     std::vector<Quest*> dependencies_;
     std::vector<Quest*> subquests_;
 
@@ -29,7 +29,7 @@ struct Quest
         Default Constructor
         @post: Creates a new Quest object with default values (zero-initialized)
     */
-    Quest() : completed_(false), experiencePoints_(0), dependencies_({}), subquests_({}) {}
+    Quest() : completed_(false), experience_points_(0), dependencies_({}), subquests_({}) {}
 
     /*
     @param: A string reference to a quest title
@@ -40,7 +40,7 @@ struct Quest
     @post: Creates a new Quest object with the given parameters
     */ //p stands for parameter
     Quest(const std::string &pTitle, const std::string pDescription = "NOT DISCOVERED", bool pCompleted = false, int pEXP = 0, std::vector<Quest*> pDependcies = {}, std::vector<Quest*> pSubquests = {}) :
-    title_(pTitle), description_(pDescription), completed_(pCompleted), experiencePoints_(pEXP), dependencies_(pDependcies), subquests_(pSubquests) {}
+    title_(pTitle), description_(pDescription), completed_(pCompleted), experience_points_(pEXP), dependencies_(pDependcies), subquests_(pSubquests) {}
 
 };
 
