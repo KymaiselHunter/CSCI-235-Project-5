@@ -146,6 +146,12 @@ int main()
 
     questList.KyleFullDisplay();
 
+    string description = questList.getPointerTo(questList.getPosOf("Quest 9"))->getItem()->description_;
+
+    for(int i = 0; i < description.size(); i++)
+    {
+        cout << i << " "<< description[i] << endl;
+    }
 }
 
 // int main()

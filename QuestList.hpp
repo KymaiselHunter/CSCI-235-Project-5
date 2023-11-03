@@ -20,7 +20,7 @@ struct Quest
     std::string title_;
     std::string description_;
     bool completed_;
-    int experiencePoints_;
+    int experiencePoints_;//this was changed on the specifications, will reupload, lets see if it still compiles
     std::vector<Quest*> dependencies_;
     std::vector<Quest*> subquests_;
 
