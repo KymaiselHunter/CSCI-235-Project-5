@@ -31,6 +31,7 @@ struct Quest
     */
     Quest() : completed_(false), experience_points_(0), dependencies_({}), subquests_({}) {}
 
+
     /*
     @param: A string reference to a quest title
     @param: A string reference to a quest description
@@ -38,8 +39,18 @@ struct Quest
     @param: A vector of Quest pointers representing the quest's dependencies
     @param: A vector of Quest pointers representing the quest's subquests
     @post: Creates a new Quest object with the given parameters
-    */ //p stands for parameter
-    Quest(const std::string &pTitle, const std::string pDescription = "NOT DISCOVERED", bool pCompleted = false, int pEXP = 0, std::vector<Quest*> pDependcies = {}, std::vector<Quest*> pSubquests = {}) :
+    */ 
+   
+    /*
+        @param: A reference to string reference to a quest title
+        @param: A reference to string reference to a quest description
+        @param: A reference to boolean representing if the quest is completed
+        @param: An reference to int indicating the experience points
+        @param: A reference to vector of Quest pointers representing the quest's dependencies
+        @param: A reference to vector of Quest pointers representing the quest's subquests
+        @post: Creates a new Quest object with the given parameters
+    *///p stands for parameter
+    Quest(const std::string &pTitle, const std::string &pDescription = "NOT DISCOVERED", const bool &pCompleted = false, const int &pEXP = 0, const std::vector<Quest*> &pDependcies = {}, const std::vector<Quest*> &pSubquests = {}) :
     title_(pTitle), description_(pDescription), completed_(pCompleted), experience_points_(pEXP), dependencies_(pDependcies), subquests_(pSubquests) {}
 
 };

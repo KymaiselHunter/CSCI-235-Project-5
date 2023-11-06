@@ -146,12 +146,12 @@ int main()
 
     questList.KyleFullDisplay();
 
-    string description = questList.getPointerTo(questList.getPosOf("Quest 9"))->getItem()->description_;
+    // string description = questList.getPointerTo(questList.getPosOf("Quest 9"))->getItem()->description_;
 
-    for(int i = 0; i < description.size(); i++)
-    {
-        cout << i << " "<< description[i] << endl;
-    }
+    // for(int i = 0; i < description.size(); i++)
+    // {
+    //     cout << i << " "<< description[i] << endl;
+    // }
 }
 
 // int main()
@@ -160,105 +160,105 @@ int main()
 
 //     QuestList questList = QuestList("quests.csv");
 
-//     std::cout << "Testing questQuery:" << std::endl<< std::endl;
-//     questList.questQuery("My First Backpack");
-//     std::cout<<std::endl;
+//     // std::cout << "Testing questQuery:" << std::endl<< std::endl;
+//     // questList.questQuery("My First Backpack");
+//     // std::cout<<std::endl;
 
-//     questList.questQuery("Enter The Tavern");
-//     std::cout<<std::endl;
+//     // questList.questQuery("Enter The Tavern");
+//     // std::cout<<std::endl;
 
-//     questList.questQuery("Talk to the Barkeep");
-//     std::cout<<std::endl;
+//     // questList.questQuery("Talk to the Barkeep");
+//     // std::cout<<std::endl;
 
-//     questList.questQuery("Talk to the Chef");
-//     std::cout<<std::endl;
+//     // questList.questQuery("Talk to the Chef");
+//     // std::cout<<std::endl;
 
-//     questList.questQuery("Talk to the Mysterious Figure");
-//     std::cout<<std::endl;
+//     // questList.questQuery("Talk to the Mysterious Figure");
+//     // std::cout<<std::endl;
 
-//     questList.questQuery("House Stew");
-//     std::cout<<std::endl;
+//     // questList.questQuery("House Stew");
+//     // std::cout<<std::endl;
 
-//     questList.questQuery("Pest Control");
-//     std::cout<<std::endl;
+//     // questList.questQuery("Pest Control");
+//     // std::cout<<std::endl;
 
-//     questList.questQuery("Lost and Found");
-//     std::cout<<std::endl;
+//     // questList.questQuery("Lost and Found");
+//     // std::cout<<std::endl;
 
-//     questList.questQuery("The Melodeon");
-//     std::cout<<std::endl;
+//     // questList.questQuery("The Melodeon");
+//     // std::cout<<std::endl;
 
-//     questList.questQuery("Talk to Songcatcher");
-//     std::cout<<std::endl;
+//     // questList.questQuery("Talk to Songcatcher");
+//     // std::cout<<std::endl;
 
-//     questList.questQuery("The Melodeon's Song");
-//     std::cout<<std::endl;
+//     // questList.questQuery("The Melodeon's Song");
+//     // std::cout<<std::endl;
 
-//     questList.questQuery("Great. We Have A Melodeon");
-//     std::cout<<std::endl;
+//     // questList.questQuery("Great. We Have A Melodeon");
+//     // std::cout<<std::endl;
 
-//     questList.questQuery("Reunited");
-//     std::cout<<std::endl;
+//     // questList.questQuery("Reunited");
+//     // std::cout<<std::endl;
 
-//     questList.questQuery("Auroran Sunset");
-//     std::cout<<std::endl;
+//     // questList.questQuery("Auroran Sunset");
+//     // std::cout<<std::endl;
 
-//     //questList.KyleDisplay();
+//     questList.KyleFullDisplay();
 
-//      std::cout << "Testing printQuestDetails:" << std::endl<< std::endl;
-//     Quest* current = questList.getPointerTo(questList.getPosOf("My First Backpack"))->getItem();
-//     questList.printQuestDetails(current);
-//     std::cout<<std::endl;
+//     //  std::cout << "Testing printQuestDetails:" << std::endl<< std::endl;
+//     // Quest* current = questList.getPointerTo(questList.getPosOf("My First Backpack"))->getItem();
+//     // questList.printQuestDetails(current);
+//     // std::cout<<std::endl;
     
-//     current = questList.getPointerTo(questList.getPosOf("Enter The Tavern"))->getItem();
-//     questList.printQuestDetails(current);
-//     std::cout<<std::endl;
+//     // current = questList.getPointerTo(questList.getPosOf("Enter The Tavern"))->getItem();
+//     // questList.printQuestDetails(current);
+//     // std::cout<<std::endl;
 
-//     current = questList.getPointerTo(questList.getPosOf("Talk to the Barkeep"))->getItem();
-//     questList.printQuestDetails(current);
-//     std::cout<<std::endl;
+//     // current = questList.getPointerTo(questList.getPosOf("Talk to the Barkeep"))->getItem();
+//     // questList.printQuestDetails(current);
+//     // std::cout<<std::endl;
     
-//     current = questList.getPointerTo(questList.getPosOf("Talk to the Chef"))->getItem();
-//     questList.printQuestDetails(current);
-//     std::cout<<std::endl;
+//     // current = questList.getPointerTo(questList.getPosOf("Talk to the Chef"))->getItem();
+//     // questList.printQuestDetails(current);
+//     // std::cout<<std::endl;
 
-//     current = questList.getPointerTo(questList.getPosOf("Talk to the Mysterious Figure"))->getItem();
-//     questList.printQuestDetails(current);
-//     std::cout<<std::endl;
+//     // current = questList.getPointerTo(questList.getPosOf("Talk to the Mysterious Figure"))->getItem();
+//     // questList.printQuestDetails(current);
+//     // std::cout<<std::endl;
 
-//     current = questList.getPointerTo(questList.getPosOf("House Stew"))->getItem();
-//     questList.printQuestDetails(current);
-//     std::cout<<std::endl;
+//     // current = questList.getPointerTo(questList.getPosOf("House Stew"))->getItem();
+//     // questList.printQuestDetails(current);
+//     // std::cout<<std::endl;
 
-//     current = questList.getPointerTo(questList.getPosOf("Pest Control"))->getItem();
-//     questList.printQuestDetails(current);
-//     std::cout<<std::endl;
+//     // current = questList.getPointerTo(questList.getPosOf("Pest Control"))->getItem();
+//     // questList.printQuestDetails(current);
+//     // std::cout<<std::endl;
 
-//     current = questList.getPointerTo(questList.getPosOf("Lost and Found"))->getItem();
-//     questList.printQuestDetails(current);
-//     std::cout<<std::endl;
+//     // current = questList.getPointerTo(questList.getPosOf("Lost and Found"))->getItem();
+//     // questList.printQuestDetails(current);
+//     // std::cout<<std::endl;
 
-//     current = questList.getPointerTo(questList.getPosOf("The Melodeon"))->getItem();
-//     questList.printQuestDetails(current);
-//     std::cout<<std::endl;
+//     // current = questList.getPointerTo(questList.getPosOf("The Melodeon"))->getItem();
+//     // questList.printQuestDetails(current);
+//     // std::cout<<std::endl;
 
-//     current = questList.getPointerTo(questList.getPosOf("Talk to Songcatcher"))->getItem();
-//     questList.printQuestDetails(current);
-//     std::cout<<std::endl;
+//     // current = questList.getPointerTo(questList.getPosOf("Talk to Songcatcher"))->getItem();
+//     // questList.printQuestDetails(current);
+//     // std::cout<<std::endl;
 
-//     current = questList.getPointerTo(questList.getPosOf("The Melodeon's Song"))->getItem();
-//     questList.printQuestDetails(current);
-//     std::cout<<std::endl;
+//     // current = questList.getPointerTo(questList.getPosOf("The Melodeon's Song"))->getItem();
+//     // questList.printQuestDetails(current);
+//     // std::cout<<std::endl;
 
-//     current = questList.getPointerTo(questList.getPosOf("Great. We Have A Melodeon"))->getItem();
-//     questList.printQuestDetails(current);
-//     std::cout<<std::endl;
+//     // current = questList.getPointerTo(questList.getPosOf("Great. We Have A Melodeon"))->getItem();
+//     // questList.printQuestDetails(current);
+//     // std::cout<<std::endl;
 
-//     current = questList.getPointerTo(questList.getPosOf("Reunited"))->getItem();
-//     questList.printQuestDetails(current);
-//     std::cout<<std::endl;
+//     // current = questList.getPointerTo(questList.getPosOf("Reunited"))->getItem();
+//     // questList.printQuestDetails(current);
+//     // std::cout<<std::endl;
 
-//     current = questList.getPointerTo(questList.getPosOf("Auroran Sunset"))->getItem();
-//     questList.printQuestDetails(current);
-//     std::cout<<std::endl;
+//     // current = questList.getPointerTo(questList.getPosOf("Auroran Sunset"))->getItem();
+//     // questList.printQuestDetails(current);
+//     // std::cout<<std::endl;
 // }
