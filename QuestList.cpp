@@ -105,6 +105,10 @@ QuestList::QuestList(const std::string &pFileName) : DoublyLinkedList<Quest*>()
                 else 
                 {
                     Quest * newQuest = new Quest(lineInformation[4].substr(0, lineInformation[4].find(";")));
+                    
+                    //attempt to fix my last 10 points
+                    this->addQuest(newQuest);
+
                     dep.push_back(newQuest);
                 }
                 lineInformation[4] = lineInformation[4].substr(lineInformation[4].find(";") + 1);
@@ -117,6 +121,10 @@ QuestList::QuestList(const std::string &pFileName) : DoublyLinkedList<Quest*>()
             else
             {
                 Quest * newQuest = new Quest(lineInformation[4]);
+
+                //attempt to fix my last 10 points
+                this->addQuest(newQuest);
+
                 dep.push_back(newQuest);
             }     
         }
@@ -133,6 +141,10 @@ QuestList::QuestList(const std::string &pFileName) : DoublyLinkedList<Quest*>()
                 else
                 {
                     Quest * newQuest = new Quest(lineInformation[5].substr(0, lineInformation[5].find(";")));
+
+                    //attempt to fix my last 10 points
+                    this->addQuest(newQuest);
+
                     sub.push_back(newQuest);
                 }
                 
@@ -148,6 +160,10 @@ QuestList::QuestList(const std::string &pFileName) : DoublyLinkedList<Quest*>()
             else
             {
                 Quest * newQuest = new Quest(lineInformation[5]);
+
+                //attempt to fix my last 10 points
+                this->addQuest(newQuest);
+
                 sub.push_back(newQuest);
             }        
         }
