@@ -50,7 +50,7 @@ struct Quest
         @param: A reference to vector of Quest pointers representing the quest's subquests
         @post: Creates a new Quest object with the given parameters
     *///p stands for parameter
-    Quest(const std::string &pTitle, const std::string &pDescription = "NOT DISCOVERED", const bool &pCompleted = false, const int &pEXP = 0, const std::vector<Quest*> &pDependcies = {}, const std::vector<Quest*> &pSubquests = {}) :
+    Quest(const std::string &pTitle, const std::string &pDescription, const bool &pCompleted, const int &pEXP, const std::vector<Quest*> &pDependcies, const std::vector<Quest*> &pSubquests) :
     title_(pTitle), description_(pDescription), completed_(pCompleted), experience_points_(pEXP), dependencies_(pDependcies), subquests_(pSubquests) {}
 
 };
