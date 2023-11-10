@@ -150,9 +150,10 @@ QuestList::QuestList(const std::string &pFileName) : DoublyLinkedList<Quest*>()
                 
                 lineInformation[5] = lineInformation[5].substr(lineInformation[5].find(";") + 1);
             }
+            //they fixed it so damn no more substr
             //get the last one too
             //remove the space at the end
-            lineInformation[5] = lineInformation[5].substr(0, lineInformation[5].length()-1);
+            //lineInformation[5] = lineInformation[5].substr(0, lineInformation[5].length()-1);
             if(this->contains(lineInformation[5]))
             {
                 sub.push_back(this->getPointerTo(this->getPosOf(lineInformation[5]))->getItem());
