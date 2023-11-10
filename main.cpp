@@ -269,11 +269,37 @@ using namespace std;
 //     // std::cout<<std::endl;
 // }
 
+// int main()
+// {
+    
+//     QuestList questList = QuestList("quests.csv");
+
+//     std::cout << "===================================" << std::endl;
+//     std::cout << "Kyle's Display" << std::endl;
+//     std::cout << "===================================" << std::endl;
+
+//     questList.KyleDisplay();
+
+//     std::cout << "===================================" << std::endl;
+//     std::cout << "Kyle's Full Display" << std::endl;
+//     std::cout << "===================================" << std::endl;
+
+//     questList.KyleFullDisplay();
+
+// }
+
 int main()
 {
-    
-    QuestList questList = QuestList("quests.csv");
+    QuestList questList = QuestList();
 
+    Quest * quest1 = new Quest("Quest 1", "Description 1", true, 100);
+    Quest * quest2 = new Quest("Quest 2", "Description 2", true, 200);
+    Quest * quest3 = new Quest("Quest 3", "Description 3", false, 100, {}, {quest1});
+
+    questList.addQuest(quest1);
+    questList.addQuest(quest2);
+    questList.addQuest(quest3);
+    
     std::cout << "===================================" << std::endl;
     std::cout << "Kyle's Display" << std::endl;
     std::cout << "===================================" << std::endl;
@@ -285,5 +311,4 @@ int main()
     std::cout << "===================================" << std::endl;
 
     questList.KyleFullDisplay();
-
 }
