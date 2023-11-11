@@ -154,6 +154,12 @@ QuestList::QuestList(const std::string &pFileName) : DoublyLinkedList<Quest*>()
             //get the last one too
             //remove the space at the end
             //lineInformation[5] = lineInformation[5].substr(0, lineInformation[5].length()-1);
+
+            // for(int i = 0; i < lineInformation[5].length(); i++)
+            // {
+            //     std::cout << i << " " << lineInformation[5][i] << std::endl;
+            // }
+
             if(this->contains(lineInformation[5]))
             {
                 sub.push_back(this->getPointerTo(this->getPosOf(lineInformation[5]))->getItem());
