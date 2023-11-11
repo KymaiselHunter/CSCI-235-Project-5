@@ -379,7 +379,7 @@ void QuestList::printQuest(const Quest *pQuest) const
     @param: A vector to the ptrs of not ready Quests
     @post:  uses recursion to add the not ready quests at the lowest level first, also adds readied quests to the ready vecotr
 */
-void QuestList::recursiveQuestQuery(Quest *pQuest, std::vector<Quest*> &pReady, std::vector<Quest*> &pNotReady)
+void QuestList::recursiveQuestQuery(Quest *pQuest, std::vector<Quest*> &pReady, std::vector<Quest*> &pNotReady) const
 {
     //loop through the dependencies
     for(int i = 0 ; i < pQuest->dependencies_.size(); i++)
@@ -437,7 +437,7 @@ void QuestList::recursiveQuestQuery(Quest *pQuest, std::vector<Quest*> &pReady, 
             
     If the given quest title is not found in the list, print "No such quest."
 */
-void QuestList::questQuery(const std::string &pTitle)
+void QuestList::questQuery(const std::string &pTitle) const
 {
     //first lets take the test case that it does not exist
     if(!this->contains(pTitle))
@@ -607,7 +607,7 @@ void QuestList::questHistory(const std::string &pFilter) const
     @param: An integer for depth, used to calculate how many indents
     @post:  uses recursion to print a list of subquests
 */
-void QuestList::recursiveQuestDetails(Quest *pQuest, int depth)
+void QuestList::recursiveQuestDetails(Quest *pQuest, int depth) const
 {
     std::string output = "";//need an empty string for indentations 
     for(int i = 0; i < depth; i++)
@@ -658,7 +658,7 @@ void QuestList::recursiveQuestDetails(Quest *pQuest, int depth)
                     [Subquest02]: [Complete / Not Complete]
             Hint: You can write a helper function to print the subquests recursively. If the given quest is already marked as completed, you can assume that all of its subquests are also completed.
 */
-void QuestList::printQuestDetails(const Quest *pQuest)
+void QuestList::printQuestDetails(const Quest *pQuest) const
 {
     std::cout << pQuest->title_ << " (" << (int)(((double)calculatePathwayExperience(pQuest) / calculateProjectedExperience(pQuest))*100) << "% Complete)" << std::endl;
 

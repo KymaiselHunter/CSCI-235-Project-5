@@ -191,7 +191,7 @@ class QuestList : public DoublyLinkedList<Quest*>
                     
             If the given quest title is not found in the list, print "No such quest."
         */
-        void questQuery(const std::string &pTitle); //this was originally const but my recursion changed that// must come back later
+        void questQuery(const std::string &pTitle) const; //this was originally const but my recursion changed that// must come back later //i came back >:)
 
         /**
             @return: An integer sum of all the experience gained
@@ -239,7 +239,7 @@ class QuestList : public DoublyLinkedList<Quest*>
                             [Subquest02]: [Complete / Not Complete]
                     Hint: You can write a helper function to print the subquests recursively. If the given quest is already marked as completed, you can assume that all of its subquests are also completed.
         */
-        void printQuestDetails(const Quest *pQuest);
+        void printQuestDetails(const Quest *pQuest) const;
 
         //helper function just to visualize the linkedList, going to steal the display code again
         /**
@@ -262,7 +262,7 @@ class QuestList : public DoublyLinkedList<Quest*>
             @param: A vector to the ptrs of not ready Quests
             @post:  uses recursion to add the not ready quests at the lowest level first, also adds readied quests to the ready vecotr
         */
-        void recursiveQuestQuery(Quest *pQuest, std::vector<Quest*> &pReady, std::vector<Quest*> &pNotReady);
+        void recursiveQuestQuery(Quest *pQuest, std::vector<Quest*> &pReady, std::vector<Quest*> &pNotReady) const;
 
         //Another recursive function but for the last func "printQuestDetails"
         /**
@@ -270,7 +270,7 @@ class QuestList : public DoublyLinkedList<Quest*>
             @param: An integer for depth, used to calculate how many indents
             @post:  uses recursion to print a list of subquests
         */
-        void recursiveQuestDetails(Quest *pQuest, int depth = 1);
+        void recursiveQuestDetails(Quest *pQuest, int depth = 1) const;
 };
 
 #endif //QuestList_HPP
